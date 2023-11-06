@@ -5,11 +5,15 @@ class Solution {
         
         //using two pointers
         
-        if(arr.length < 3) return false;
-        int l = 0;
-        int r = arr.length - 1;
-        while(l + 1 < arr.length - 1 && arr[l] < arr[l + 1]) l++;
-        while(r - 1 > 0 && arr[r] < arr[r - 1]) r--;
-        return l == r;
+        int increasePointer = 0;
+        int decreasePointer = arr.length-1;
+        
+        while((increasePointer+1 < arr.length-1) && (arr[increasePointer] < arr[increasePointer+1]))
+            increasePointer++;
+        
+        while((decreasePointer-1 > 0) && (arr[decreasePointer] < arr[decreasePointer-1]))
+            decreasePointer--;
+        
+        return increasePointer==decreasePointer;
     }
 }
