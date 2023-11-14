@@ -1,17 +1,22 @@
 class Solution {
     public boolean validPalindrome(String s) {
-        int left = 0, right = s.length() - 1;
-        while (left < right) {
-            if (s.charAt(left) != s.charAt(right))
-                return isRestOfStringValid(s, left + 1, right) || isRestOfStringValid(s, left, right - 1);
-            left++;
-            right--;
-        }
-        return true;
+return isPalindrome(0, s.length() - 1, s, false);
     }
-    public boolean isRestOfStringValid(String s, int left, int right) {
-        String str = s.substring(left, right + 1);
-        String reverse = new StringBuilder(str).reverse().toString();
-        return str.equals(reverse);
+
+    private boolean isPalindrome(int i, int j, String s, boolean deleted) {
+        while (i < j) {
+            if (s.charAt(i) != s.charAt(j)) {
+                if (deleted) {
+                    return false;
+                }
+
+                return isPalindrome(i + 1, j, s, true) || isPalindrome(i, j-1, s, true);
+            }
+
+            i++;
+            j--;
+        }
+
+        return true;
     }
 }
