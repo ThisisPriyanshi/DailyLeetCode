@@ -22,17 +22,34 @@ class Solution {
     return true;
   }
 
-  public static boolean isValid(char[][] board, int row, int col, char c) {
-    for (int i = 0; i < 9; i++) {
-      if (board[i][col] == c)
-        return false;
+  public static boolean isValid(char[][] board, int row, int col, char num) {
+    // check the row
+        for (int i = 0; i < board.length; i++) {
+            // check if the number is in the row
+            if (board[row][i] == num) {
+                return false;
+            }
+        }
 
-      if (board[row][i] == c)
-        return false;
+        // check the col
+        for (char[] nums : board) {
+            // check if the number is in the col
+            if (nums[col] == num) {
+                return false;
+            }
+        }
 
-      if (board[3 * (row / 3) + i / 3][3 * (col / 3) + i % 3] == c)
-        return false;
+        int sqrt = (int)(Math.sqrt(board.length));
+        int rowStart = row - row % sqrt;
+        int colStart = col - col % sqrt;
+
+        for (int r = rowStart; r < rowStart + sqrt; r++) {
+            for (int c = colStart; c < colStart + sqrt; c++) {
+                if (board[r][c] == num) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
-    return true;
-  }
 }
