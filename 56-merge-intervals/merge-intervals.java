@@ -16,7 +16,7 @@ class Solution {
             
             int endmax = Math.max(endpoint2,endpoint1);
                 
-            if(endpoint1>=startpoint2){
+            if(startpoint2<=endpoint1){
                 int[] merge = new int[]{startpoint1,endmax};
                 myStack.add(merge);
             }else{
