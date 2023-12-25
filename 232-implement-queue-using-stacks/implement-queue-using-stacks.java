@@ -1,11 +1,7 @@
 class MyQueue {
 
-    Stack <Integer> myStackQ = new Stack<>();
-    Stack <Integer> myHelper = new Stack<>();
-
-    public MyQueue() {
-        
-    }
+    private Stack <Integer> myStackQ = new Stack<>();
+    private Stack <Integer> myHelper = new Stack<>();
     
     public void push(int x) {
 
