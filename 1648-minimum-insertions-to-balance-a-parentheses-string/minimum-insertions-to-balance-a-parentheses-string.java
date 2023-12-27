@@ -1,42 +1,40 @@
 class Solution {
     public int minInsertions(String s) {
-        Stack<Integer> stack = new Stack<>();
-        int ans =0;
-        for(int i =0;i<s.length();i++)
+        int count = 0;
+        Stack<Character> stack = new Stack<>();
+
+        for( int i = 0; i < s.length() ; i++)
         {
-            char ch = s.charAt(i);
-            if(ch == '(')
+            char c = s.charAt(i);
+
+            if( c == '(')
             {
-                if(stack.isEmpty() || stack.peek() == 2)
-                stack.push(2);
-                else{
-                    stack.pop();
-                    stack.push(2);
-                    ans++;
-                }
+                stack.push(')');
             }
-            else if(ch == ')')
+            else
             {
-                if(stack.isEmpty())
+                if( i+1 < s.length() && s.charAt(i+1) == ')')
                 {
-                    stack.push(1);
-                    ans++;
+                    i++;
                 }
-                else if (stack.peek()==1)
-                stack.pop();
-                else if (stack.peek()==2)
+                else
+                {
+                    count++;
+                }
+
+                if(!stack.isEmpty())
                 {
                     stack.pop();
-                    stack.push(1);
+                }
+                else
+                {
+                    count++;
                 }
             }
-           
         }
-        while(!stack.isEmpty())
-        {
-            ans = ans + stack.peek();
-            stack.pop();
-        }
-        return ans;
+
+         count += 2 * stack.size();
+        return count;
+        
     }
 }
