@@ -1,26 +1,25 @@
 class Solution {
     public int majorityElement(int[] nums) {
-        //through boyer moore method
-        int element = 0;
-        int counter = 0;
+int BoyerMooreElement = 0;
+        int BoyerMooreCounter = 0;
 
-        for(int i = 0; i < nums.length; i++)
+        for(int i = 0 ; i < nums.length; i++)
         {
-            if (counter == 0)
+            if( BoyerMooreCounter == 0)
             {
-                element = nums[i];
+                BoyerMooreElement = nums[i];
             }
-            if ( nums[i] == element)
+
+            if ( nums[i] == BoyerMooreElement)
             {
-                counter++;
+                BoyerMooreCounter++;
             }
             else
             {
-                counter --;
+                BoyerMooreCounter--;
             }
         }
 
-        return element;
-        
+        return BoyerMooreElement;
     }
 }
