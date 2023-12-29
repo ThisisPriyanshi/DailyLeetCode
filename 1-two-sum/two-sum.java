@@ -1,7 +1,7 @@
 class Solution {
     public int[] twoSum(int[] nums, int target) {
-int[] result = {-1, -1};
-        int l = nums.length; int flag = 0;
+        int[] result = {-1, -1};
+        int l = nums.length;
         for( int i = 0;i< l ; i++)
         {
             int start = (i+1);
