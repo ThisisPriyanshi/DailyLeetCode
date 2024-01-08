@@ -1,26 +1,19 @@
 class Solution {
     public List<List<Integer>> subsets(int[] nums) {
         Arrays.sort(nums);
-        List<List<Integer>> arr = new ArrayList<>();
-        arr.add(new ArrayList<>());
-        int start = 0;
-        int end = 0;
-        for(int i = 0 ; i < nums.length;i++)
+        List<List<Integer>> outer = new ArrayList<>();
+        outer.add(new ArrayList<>());
+        for(int num : nums)
         {
-            int n = arr.size();
-            if(i!=0 && nums[i]== nums[i-1])
+            int n = outer.size();
+            for(int i =0; i < n; i++)
             {
-                start = end+1;
-            }
-            end = arr.size()-1;
-
-            for(int j = 0 ; j < n;j++)
-            {
-                List<Integer> arr1 = new ArrayList<>(arr.get(j));
-                arr1.add(nums[i]);
-                arr.add(arr1);
+                List<Integer> internal = new ArrayList<>(outer.get(i));
+                internal.add(num);
+                outer.add(internal);
             }
         }
-        return arr;
+
+        return outer;
     }
 }
