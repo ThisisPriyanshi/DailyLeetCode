@@ -1,39 +1,51 @@
 class Solution {
-    List<Integer> res = new ArrayList<>();
-    int[][] matrix;
-    int m;
-    int n;
-
     public List<Integer> spiralOrder(int[][] matrix) {
-       this.matrix = matrix;
-        m = matrix.length;
-        n = matrix[0].length;
-        int p = 0;
-        while (n > 0 && m > 0) {
-            borderFrom(p, p);
-            p++;
-            m -= 2;
-            n -= 2;
-        }
-        return res;
-    }
+        List<Integer> mySpiralMatrix = new ArrayList<>();
 
-    private void borderFrom(int r, int c) {
-        for (int i = c; i <= c + n - 1; i++) {
-            res.add(matrix[r][i]);
-        }
-        for (int i = r + 1; i <= r + m - 2; i++) {
-            res.add(matrix[i][c + n - 1]);
-        }
-        if (m > 1) {
-            for (int i = c + n - 1; i >= c; i--) {
-                res.add(matrix[r + m - 1][i]);
+        int rows = matrix.length;
+        int column = matrix[0].length;
+
+        int top = 0; int bottom = rows - 1; int left = 0;  int right = column-1;
+
+        while((top <= bottom) && (left <= right))
+        {   
+            //for left --> right
+            for(int i = left; i<= right; i++)
+            {
+                mySpiralMatrix.add(matrix[top][i]);
             }
-        }
-        if (n > 1) {
-            for (int i = r + m - 2; i >= r + 1; i--) {
-                res.add(matrix[i][c]);
+            top++;
+
+            //for top --> bottom
+            for(int i = top ; i <= bottom; i++)
+            {
+                mySpiralMatrix.add(matrix[i][right]);
             }
+
+            right--;
+
+            //for right --> left
+            if( top <= bottom)
+            {
+                for(int i = right; i >= left; i--)
+                {
+                    mySpiralMatrix.add(matrix[bottom][i]);
+                }
+            bottom--;
+            }
+            
+            //for bottom to top
+            if(left <= right)
+            {
+            for(int i = bottom; i >= top; i--)
+            {
+                mySpiralMatrix.add(matrix[i][left]);
+            }
+            left++;
+            }
+
         }
+
+        return mySpiralMatrix;
     }
 }
