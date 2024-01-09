@@ -28,7 +28,7 @@ class Solution {
         }
 
         myRes.add(new int[] {start, end});
-        return myRes.toArray(new int[0][]);
+        return myRes.toArray(new int[0][0]);
 
     }
 }
