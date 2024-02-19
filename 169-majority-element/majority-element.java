@@ -1,25 +1,27 @@
 class Solution {
     public int majorityElement(int[] nums) {
-int BoyerMooreElement = 0;
-        int BoyerMooreCounter = 0;
+        //using boyer moore algorithm
 
-        for(int i = 0 ; i < nums.length; i++)
+        int boyerMCounter = 0;
+        int boyerElement = 0;
+
+        for(int i = 0; i< nums.length; i++)
         {
-            if( BoyerMooreCounter == 0)
+            if( boyerMCounter == 0)
             {
-                BoyerMooreElement = nums[i];
+                boyerElement = nums[i];
             }
 
-            if ( nums[i] == BoyerMooreElement)
+            if( nums[i] == boyerElement)
             {
-                BoyerMooreCounter++;
+                boyerMCounter++;
             }
             else
             {
-                BoyerMooreCounter--;
+                boyerMCounter--;
             }
         }
 
-        return BoyerMooreElement;
+        return boyerElement;
     }
 }
