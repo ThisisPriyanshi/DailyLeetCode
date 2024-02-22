@@ -1,37 +1,22 @@
 class Solution {
     public int[] rearrangeArray(int[] nums) {
         
-       List<Integer> a = new ArrayList<>();
-        List<Integer> b = new ArrayList<>();
-        List<Integer> c = new ArrayList<>();
+        int n = nums.length;
+        int posIndex = 0, negIndex = 0;
+        int[] result = new int[n];
 
-        // Separate positive and negative integers into two separate arrays
-        for (int num : nums) {
-            if (num > 0)
-                a.add(num);
-            else
-                b.add(num);
-        }
-
-        // Interleave positive and negative integers while preserving their order
-        int count = 0, c1 = 0, c2 = 0;
-        for (int num : nums) {
-            if (count % 2 == 0) {
-                int n = a.get(c1++);
-                c.add(n);
+        // Place positive numbers at even indices and negative numbers at odd indices
+        for (int i = 0; i < n; ++i) {
+            if (i % 2 == 0) {
+                while (posIndex < n && nums[posIndex] < 0)
+                    ++posIndex;
+                result[i] = nums[posIndex++];
             } else {
-                int n = b.get(c2++);
-                c.add(n);
+                while (negIndex < n && nums[negIndex] >= 0)
+                    ++negIndex;
+                result[i] = nums[negIndex++];
             }
-            count++;
         }
-
-        // Convert List<Integer> to int[]
-        int[] result = new int[c.size()];
-        for (int i = 0; i < c.size(); i++) {
-            result[i] = c.get(i);
-        }
-
         return result;
     }
 }
