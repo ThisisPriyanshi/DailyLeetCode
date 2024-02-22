@@ -15,7 +15,7 @@ class Solution {
 
         if(breakPointIndex == -1)
         {
-            //last permutation so we need teh first permutation --> simply reverse     
+            //last permutation so we need the first permutation --> simply reverse     
             int j = nums.length - 1;
             for(int i = 0; i < n/2; i++)
             {
