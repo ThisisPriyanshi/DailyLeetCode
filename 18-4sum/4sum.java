@@ -1,6 +1,6 @@
 class Solution {
     public List<List<Integer>> fourSum(int[] nums, int target) {
-        int n = nums.length; // size of the array
+int n = nums.length; // size of the array
         List<List<Integer>> ans = new ArrayList<>();
 
         // sort the given array:
@@ -43,5 +43,4 @@ class Solution {
 
         return ans;
     }
-
 }
