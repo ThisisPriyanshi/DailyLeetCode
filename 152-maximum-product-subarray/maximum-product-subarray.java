@@ -1,37 +1,33 @@
 class Solution {
     public int maxProduct(int[] nums) {
-         int n = nums.length;
+        //we will use the kadane's algorithm but modified
 
         int maxProduct = Integer.MIN_VALUE;
 
-        //applying Kadane's algo from Left to Right
-        
-        int currProd_Left_to_Right = 1;
+        //calculating from left to right
 
-        for(int i=0; i<n; i++){
-            currProd_Left_to_Right*=nums[i];
+        int leftToRightProduct = 1;
 
-            maxProduct = Math.max(maxProduct, currProd_Left_to_Right);
-            
-             if(currProd_Left_to_Right == 0){
-                currProd_Left_to_Right = 1;
-            }
+        for(int i = 0 ; i <nums.length; i++)
+        {
+            leftToRightProduct = leftToRightProduct * nums[i];
+            maxProduct = Math.max(maxProduct, leftToRightProduct);
 
+            if (leftToRightProduct == 0)
+            leftToRightProduct = 1;
         }
 
-        //applying Kadane's algo from Right to Left
+        //calculating from right to left
 
-        int currProd_Right_to_Left = 1;
+        int rightToLeftProduct = 1;
 
-        for(int i=n-1; i>=0; i--){
-            currProd_Right_to_Left*=nums[i];
-            
-            maxProduct = Math.max(maxProduct, currProd_Right_to_Left);
-            
-            if(currProd_Right_to_Left == 0){
-                currProd_Right_to_Left = 1;
-            }
+        for(int j = nums.length - 1; j >= 0; j--)
+        {
+            rightToLeftProduct = rightToLeftProduct * nums[j];
+            maxProduct = Math.max(maxProduct, rightToLeftProduct);
 
+            if(rightToLeftProduct == 0)
+            rightToLeftProduct = 1;
         }
 
         return maxProduct;
