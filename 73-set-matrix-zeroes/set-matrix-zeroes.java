@@ -1,31 +1,38 @@
 class Solution {
     public void setZeroes(int[][] matrix) {
-boolean fr = false,fc = false;
-    for(int i = 0; i < matrix.length; i++) {
-        for(int j = 0; j < matrix[0].length; j++) {
-            if(matrix[i][j] == 0) {
-                if(i == 0) fr = true;
-                if(j == 0) fc = true;
-                matrix[0][j] = 0;
-                matrix[i][0] = 0;
+        
+        int rows = matrix.length;
+        int columns = matrix[0].length;
+
+        int[] rowMarker = new int[rows];
+        int[] columnsMarker = new int[columns];
+        //by default arrays will be initiated with 0
+
+        for(int i = 0 ;i < rows; i++)
+        {
+            for (int j = 0; j < columns; j++)
+            {
+                if(matrix[i][j] == 0)
+                {
+                    rowMarker[i] = 1;
+                    columnsMarker[j] = 1;
+                }
             }
         }
-    }
-    for(int i = 1; i < matrix.length; i++) {
-        for(int j = 1; j < matrix[0].length; j++) {
-            if(matrix[i][0] == 0 || matrix[0][j] == 0) {
-                matrix[i][j] = 0;
-        }}
-    }
-    if(fr) {
-        for(int j = 0; j < matrix[0].length; j++) {
-            matrix[0][j] = 0;
+        
+        //it is marked
+
+        for(int k = 0; k < rows; k++)
+        {
+            for(int l = 0; l < columns; l++)
+            {
+                if((rowMarker[k] == 1) || (columnsMarker[l] == 1))
+                {
+                    matrix[k][l] = 0;
+                }
+            }
         }
-    }
-    if(fc) {
-        for(int i = 0; i < matrix.length; i++) {
-            matrix[i][0] = 0;
-        }
+
+        // all marked as zeroes
     }
 }
-}  
