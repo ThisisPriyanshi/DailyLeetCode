@@ -1,25 +1,39 @@
 class Solution {
     public int maxProduct(int[] nums) {
-        int minProduct = nums[0];
-        int maxProduct = nums[0];
-        int ans = nums[0];
+         int n = nums.length;
 
-        for(int i = 1 ; i <nums.length; i++)
-        {
-            if(nums[i] < 0)
-            {
-                int temp = maxProduct;
-                maxProduct = minProduct;
-                minProduct = temp;
+        int maxProduct = Integer.MIN_VALUE;
+
+        //applying Kadane's algo from Left to Right
+        
+        int currProd_Left_to_Right = 1;
+
+        for(int i=0; i<n; i++){
+            currProd_Left_to_Right*=nums[i];
+
+            maxProduct = Math.max(maxProduct, currProd_Left_to_Right);
+            
+             if(currProd_Left_to_Right == 0){
+                currProd_Left_to_Right = 1;
             }
 
-            maxProduct = Math.max(maxProduct* nums[i], nums[i]);
-
-            minProduct = Math.min(minProduct*nums[i], nums[i]);
-
-            ans = Math.max(ans, maxProduct);
         }
 
-        return ans;
+        //applying Kadane's algo from Right to Left
+
+        int currProd_Right_to_Left = 1;
+
+        for(int i=n-1; i>=0; i--){
+            currProd_Right_to_Left*=nums[i];
+            
+            maxProduct = Math.max(maxProduct, currProd_Right_to_Left);
+            
+            if(currProd_Right_to_Left == 0){
+                currProd_Right_to_Left = 1;
+            }
+
+        }
+
+        return maxProduct;
     }
 }
