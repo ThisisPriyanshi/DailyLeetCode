@@ -1,45 +1,18 @@
 class Solution {
     public boolean isValidSudoku(char[][] board) {
-       // Step 1 : row-wise Checking
-        for(int i=0;i<9;i++){
-            HashSet<Integer> hs = new HashSet<>();
-            for(int j=0;j<9;j++){
-                if(hs.contains(board[i][j]+'0')){
-                    return false;
-                }
-                if(board[i][j]!='.'){
-                    hs.add(board[i][j]+'0');
-                }
-            }
-        }
-        // step 2 : column-wise Checking
-        for(int i=0;i<9;i++){
-            HashSet<Integer> hs = new HashSet<>();
-            for(int j=0;j<9;j++){
-                if(hs.contains(board[j][i]+'0')){
-                    return false;
-                }
-                if(board[j][i]!='.'){            
-                    hs.add(board[j][i]+'0');
+       int line[][] =   new int[9][9];    
+        int col[][] =    new int[9][9];
+        int square[][] = new int[9][9];
+        for(int i = 0; i < 9 ; i++)
+            {
+                for(int j = 0; j < 9; j++)
+                if(board[i][j] != '.')
+                {
+                    int pos = board[i][j] - '0' - 1;
+                    int pos_square = (i/3) + (j / 3)*3;
+                    if(++line[i][pos] > 1 || ++col[pos][j] > 1 || ++square[pos_square][pos] > 1)return false;
                 }
             }
-        }
-        // step 3 : matrix-wise Checking
-        for(int i=0;i<9;i+=3){
-            for(int j=0;j<9;j+=3){
-                HashSet<Integer> hs = new HashSet<>();
-                for(int k=i;k<i+3;k++){
-                    for(int l=j;l<j+3;l++){
-                        if(hs.contains(board[k][l]+'0')){
-                            return false;
-                        }
-                        if(board[k][l]!='.'){            
-                            hs.add(board[k][l]+'0');
-                        }
-                    }
-                }
-            }
-        }
         return true;
     }
 }
