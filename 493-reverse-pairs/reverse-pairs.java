@@ -1,77 +1,59 @@
 class Solution {
-    int count = 0;
     public int reversePairs(int[] nums) {
-           if(nums.length == 50000 && nums[0] == 1774763047 && nums[6] == -1264165101){
-
-          return 625447022;
-      }
-        reversePairsC(0, nums.length-1, nums);
-      //  System.out.println(Arrays.toString(nums));
-     // System.out.println(nums[0]);
-     // System.out.println(nums.length);
+        return mergeSort(nums, 0 , nums.length-1);
+    }
+    
+    // merge sort modified
+    private int mergeSort(int[] nums, int start, int end){
+        if(start>=end)
+            return 0;
+        int mid = start + (end-start)/2;
+        int reversePairs = 0;
+        reversePairs += mergeSort(nums, start, mid);
+        reversePairs += mergeSort(nums, mid+1, end);
+        reversePairs += merge(nums, start, mid, end);
+        return reversePairs;
+    }
+    
+    private int merge(int[] nums, int start, int mid, int end){
+        int n1 = mid - start + 1;
+        int n2 = end - mid;
+        long nums1[] = new long[n1+1];
+        nums1[n1] = Long.MAX_VALUE;
+        long nums2[] = new long[n2+1];
+        nums2[n2] = Integer.MAX_VALUE;
+        for(int i=0; i<n1; i++)
+            nums1[i] = nums[i+start];
+        for(int j=0; j<n2; j++)
+            nums2[j] = nums[mid+1+j];
+        
+        // System.out.println("******************");
+        // System.out.println(Arrays.toString(nums1));
+        // System.out.println(Arrays.toString(nums2));
+        
+        // Here comes our logic to count pairs
+        int count=0;
+        int i=0, j=0;
+        for(i=0; i<n1; i++){
+            while(j<n2 && nums1[i]>(2*nums2[j])){
+                j++;
+            }
+            count += j;
+        }
+        // Logic Ends
+        
+        i=0;
+        j=0;
+        // now, putting element in sorted array in original array
+        for(int k=start; k<=end; k++){
+            if(nums1[i]<=nums2[j]){
+                nums[k] = (int)nums1[i++];
+            } else {
+                nums[k] = (int)nums2[j++];
+            }
+        }
+        
         return count;
     }
-
-    private void reversePairsC(int start, int end , int[] nums){
-        if(end-start<1){
-           return ;
-        }
-        int mid = start + (end - start)/2;
-        reversePairsC(start , mid, nums); 
-        reversePairsC(mid+1 , end, nums);
-        countReversePair(start, mid, end, nums);
-        mergeArray(start, end, mid, nums);
-
-    }
-    private void mergeArray(int start, int end, int mid, int[] nums){
-          int fistHalfStart = start;
-          int secondHalfStart = mid + 1; 
-          int[] arr = new int[end-start+1];
-          int index = 0;
-          while(fistHalfStart<=mid && secondHalfStart<= end ){
-               if(nums[fistHalfStart]>nums[secondHalfStart]){
-                   arr[index] = nums[fistHalfStart];
-                   index++;
-                   fistHalfStart++;
-               }else{
-                  arr[index] = nums[secondHalfStart];
-                  index++;
-                  secondHalfStart++;
-               }
-          }
-          while(fistHalfStart<=mid ){
-               arr[index] = nums[fistHalfStart];
-               index++;
-               fistHalfStart++;
-          }
-
-          while(secondHalfStart<=end){
-              arr[index] = nums[secondHalfStart];
-              index++;
-              secondHalfStart++;
-          }
-          index = 0;
-
-         for(int i = start ; i<=end; i++){
-             nums[i] = arr[index];
-             index++;
-         }
-
-    }
-
-    private void countReversePair(int start, int mid, int end, int[] nums){
-         int n = nums.length;
-         int secondHalfStart = mid+1;
-         int firstHalfStart = start;
-         while(firstHalfStart <= mid &&  secondHalfStart <= end){
-               while(secondHalfStart <= end && nums[firstHalfStart]-nums[secondHalfStart] <=  nums[secondHalfStart]){
-                   secondHalfStart++;
-               } 
-
-               if(secondHalfStart <= end){
-                   count = count + (end - secondHalfStart + 1);
-               }
-               firstHalfStart++;
-         }
-    }
+    
 }
