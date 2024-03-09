@@ -1,29 +1,27 @@
 class Solution {
     public int singleNonDuplicate(int[] nums) {
+        int low = 0;
+        int high = nums.length - 1;
 
- 
-        int start = 0;
-        int end = nums.length - 1;
-
-        while(start < end)
+        while(low < high)
         {
-            int mid = start + (end - start)/2;
+            int mid = low + (high - low)/2;
 
-            if(mid % 2 != 0)
+            if(mid % 2 != 0) //if not even set it to even
             {
-                mid--;// put it even position for checking
+                mid--;
             }
 
-            if(nums[mid] == nums[mid+1])//correct position that means single element is on right side
+            if(nums[mid] == nums[mid+1])
             {
-                start = mid + 2; //next number
+                low = mid + 2; //next number
             }
-            else //incorrect positioning that means single number is on the left side
+            else // the single number exists on the left side
             {
-                end = mid;
+                high = mid;
             }
         }
 
-        return nums[start];
+        return nums[low];
     }
 }
