@@ -1,9 +1,8 @@
 class Solution {
     public int[] searchRange(int[] nums, int target) {
-        boolean firstoccurence = true;
+        boolean firstOccurrence = true;
         int[] ans = {-1, -1};
 
-        boolean firstOccurrence = true;
         ans[0] = findPosition(nums, target, firstOccurrence);
         firstOccurrence = false;
         ans[1] = findPosition(nums, target, firstOccurrence);
