@@ -10,8 +10,8 @@ class Solution {
         char[] tChArr = t.toCharArray();
         
         // test cases includes special symbols till ~ see acsii table
-        int[] mapS = new int['~' + 1];
-        int[] mapT = new int['~' + 1];
+        int[] mapS = new int[256];
+        int[] mapT = new int[256];
         
         for(int i = 0; i < s.length(); i++) {
             
