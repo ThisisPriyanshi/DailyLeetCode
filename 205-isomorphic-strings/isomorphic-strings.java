@@ -2,27 +2,28 @@ class Solution {
     public boolean isIsomorphic(String s, String t) {
         //edge case - lengths are different
 
-        if(s.length() != t.length())
-        {
-            return false;
-        }
+        if(s.length() != t.length()) return false;
+        
+        if(s.equals(t)) return true;
 
-        //create arrays for both to mark the alphabets
-        int[] mapForS = new int[256];
-        int[] mapForT = new int[256];
-
-        for(int index = 0; index < s.length(); index++)
-        {
-            //check for differences
-            if(mapForS[s.charAt(index)] != mapForT[t.charAt(index)])
-            {
+        char[] sChArr = s.toCharArray();
+        char[] tChArr = t.toCharArray();
+        
+        // test cases includes special symbols till ~ see acsii table
+        int[] mapS = new int['~' + 1];
+        int[] mapT = new int['~' + 1];
+        
+        for(int i = 0; i < s.length(); i++) {
+            
+            if(mapS[sChArr[i]] != mapT[tChArr[i]]) {
                 return false;
             }
-
-            mapForS[s.charAt(index)] = index+1;
-            mapForT[t.charAt(index)] = index+1;
-        }
-
+            
+            // + 1 we use for exclude i=0 element in the loop due to our map* initializationed with 0 
+            mapS[sChArr[i]] = i + 1;
+            mapT[tChArr[i]] = i + 1;
+        } 
+        
         return true;
     }
 }
