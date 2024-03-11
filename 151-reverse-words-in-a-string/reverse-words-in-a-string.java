@@ -1,28 +1,28 @@
 class Solution {
     public String reverseWords(String s) {
-        s = s.trim();
-            int n = s.length();
-            String word = "";
-            String res = "";
-            for(int i = (n-1); i>=0; i--)
-            {
-                char z = s.charAt(i);
-                if(z != 32)
-                {
-                    word = z+word;
-                }
-                else
-                {
-                    if(s.charAt(i-1) != 32)
-                    {
-                        res = res + word + " ";
-                        word = "";
-                    }
+        char[] in = s.toCharArray();
+        char[] out = new char[in.length + 1];
+        int right = in.length - 1;
+        int ind = 0;
 
-                }
-            }
+        while (right >= 0)
+        {
+            while (right >= 0 && in[right] == ' ') 
+            right--;
 
-            res = res + word;
-            return res;
+            if (right < 0) 
+            break;
+
+            int rightWordIndex = right;
+
+            while (right >= 0 && in[right] != ' ') 
+            right--;
+            
+            for (int k = right + 1; k <= rightWordIndex; k++ ) 
+            out[ind++] = in[k];
+            
+            out[ind++] = ' ';
+        }
+        return new String(out, 0, ind - 1);
     }
 }
