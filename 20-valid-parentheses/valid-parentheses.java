@@ -1,28 +1,23 @@
 class Solution {
     public boolean isValid(String s) {
         
-        Stack<Character> brackets = new Stack<Character>();
-
-        for(int i = 0; i <s.length(); i++)
-        {   
-            char ch = s.charAt(i);
-            if(ch == '(')
-            {
-                brackets.push(')');
+        int i=-1;
+        char[] ch= new char[s.length()];
+        for(char c: s.toCharArray()){
+            if(c=='(' || c=='{' || c=='['){
+                ch[++i]=c;
             }
-            else if(ch == '{')
-            {
-                brackets.push('}');
-            }
-            else if (ch == '[')
-            {
-                brackets.push(']');
-            }
-            else if(brackets.isEmpty() || brackets.pop() != ch) 
-            {
-                return false;
+            else{
+                if(i>=0 && ((ch[i]=='(' && c==')')
+                || (ch[i]=='[' && c==']')
+                || (ch[i]=='{' && c=='}'))){
+                    i--;
+                }
+                else{
+                    return false;
+                }
             }
         }
-        return brackets.isEmpty();
+        return i==-1;
     }
 }
