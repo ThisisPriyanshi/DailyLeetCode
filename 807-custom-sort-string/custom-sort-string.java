@@ -1,21 +1,19 @@
 class Solution {
     public String customSortString(String order, String s) {
-        char[] charS = s.toCharArray();
-        int position = 0;
-        for (int i = 0; i < order.length(); i++)
-        {
-            for (int j = 0; j < charS.length; j++)
-            {
-                if (order.charAt(i) == charS[j]) {
-                    char temp = charS[position];
-                    charS[position] = charS[j];
-                    charS[j] = temp;
-                    position++;
-                }
+        StringBuilder result = new StringBuilder();
+        HashMap<Character, Integer> mp = new HashMap<>();
+        for (char c : s.toCharArray()) {
+            mp.put(c, mp.getOrDefault(c, 0) + 1);
+        }
+        for (char c : order.toCharArray()) {
+            if (mp.containsKey(c)) {
+                result.append(String.valueOf(c).repeat(Math.max(0, mp.get(c))));
+                mp.remove(c);
             }
         }
-
-        String str =  String.valueOf(charS);
-        return str;
+        for (char c : mp.keySet()) {
+            result.append(String.valueOf(c).repeat(Math.max(0, mp.get(c))));
+        }
+        return result.toString();
     }
 }
