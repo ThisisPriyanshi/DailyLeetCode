@@ -11,8 +11,7 @@ class Solution {
                 temp--;
             }
             ans = temp > ans ? temp : ans;
-            
-        }
+            }
         return ans;
     }
 }
