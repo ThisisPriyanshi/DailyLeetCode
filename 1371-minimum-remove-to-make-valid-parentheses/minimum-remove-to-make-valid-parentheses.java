@@ -36,16 +36,15 @@ class Solution {
             }
         }
 
-        int p = 0; // Pointer for updating the character array
-        for (int i = 0; i < myArray.length; i++) {
-            if (myArray[i] != '*')
-                myArray[p++] = myArray[i];
+        for( char ch : myArray)
+        {
+            if (ch != '*')
+            {
+                result = result+ch;
+            }
         }
 
-        // Construct the result string from the filtered character array
-        result = new String(myArray).substring(0, p);
 
-        return result;
-
+    return result;
     }
 }
