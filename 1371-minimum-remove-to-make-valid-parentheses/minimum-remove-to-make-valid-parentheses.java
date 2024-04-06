@@ -1,50 +1,50 @@
 class Solution {
     public String minRemoveToMakeValid(String s) {
-        // Initialize pointers for the start and end of the string
-        int startPointer = 0;
-        int endPointer = s.length() - 1;
-
-        // Initialize variables for storing start and end parts of the string, and the final result
-        String startPart = "";
-        String endPart = "";
-        String result;
-
-        // Convert input string to character array for easier manipulation
-        char[] arr = s.toCharArray();
         
-        // Counter for open parentheses
-        int openParenthesesCount = 0;
+        String result = "";
+        char[] myArray = s.toCharArray(); // chnaging to character array for easy manipulation
 
-        // First pass: mark excess closing parentheses with '*'
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] == '(')
-                openParenthesesCount++;
-            else if (arr[i] == ')') {
-                if (openParenthesesCount == 0)
-                    arr[i] = '*'; // Mark excess closing parentheses
+        int openBracket = 0;
+        int closeBracket = 0;
+        //Traversing array from right to left to mark extra closing brackets
+        for(int i = 0; i < myArray.length; i++)
+        {
+            if( myArray[i] == '(')
+            {
+                openBracket++;
+            }
+            else if ( myArray[i] == ')')
+            {
+                if(openBracket == 0)
+                {
+                    myArray[i] = '*';
+                }
                 else
-                    openParenthesesCount--;
+                {
+                    openBracket--;
+                }
             }
         }
 
-        // Second pass: mark excess opening parentheses from the end
-        for (int i = arr.length - 1; i >= 0; i--) {
-            if (openParenthesesCount > 0 && arr[i] == '(') {
-                arr[i] = '*'; // Mark excess opening parentheses
-                openParenthesesCount--;
+        //Traversing array from left to right to mark extra opening brackets
+        for( int j = myArray.length - 1; j >= 0; j--)
+        {
+            if((openBracket > 0) && (myArray[j] == '('))
+            {
+                myArray[j] = '*';
+                openBracket--;
             }
         }
-        
-        // Filter out marked characters and store the result in the character array
-        int p = 0; // Pointer for updating the character array
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] != '*')
-                arr[p++] = arr[i];
+
+        for( char ch : myArray)
+        {
+            if ( ch == '*')
+            continue;
+            else
+            result = result + ch;
         }
 
-        // Construct the result string from the filtered character array
-        result = new String(arr).substring(0, p);
 
-        return result;
+    return result;
     }
 }
