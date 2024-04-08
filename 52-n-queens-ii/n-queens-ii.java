@@ -1,23 +1,61 @@
 class Solution {
     public int totalNQueens(int n) {
-dfs(n, 0, new boolean[n], new boolean[2 * n - 1], new boolean[2 * n - 1]);
-    return ans;
-  }
+        //create board
+        boolean[][] board = new boolean[n][n];
+        return placeQueens(board, 0);
 
-  private int ans = 0;
-
-  private void dfs(int n, int i, boolean[] cols, boolean[] diag1, boolean[] diag2) {
-    if (i == n) {
-      ++ans;
-      return;
     }
 
-    for (int j = 0; j < cols.length; ++j) {
-      if (cols[j] || diag1[i + j] || diag2[j - i + n - 1])
-        continue;
-      cols[j] = diag1[i + j] = diag2[j - i + n - 1] = true;
-      dfs(n, i + 1, cols, diag1, diag2);
-      cols[j] = diag1[i + j] = diag2[j - i + n - 1] = false;
+    private int placeQueens(boolean[][] board, int row)
+    {
+        //base statement
+
+        if(row == board.length)
+        {
+            return 1;
+        }
+
+        int count = 0;
+        for(int column = 0; column < board.length; column++)
+        {
+            if( isSafe(board, row, column))
+            {
+                board[row][column] = true;
+                count += placeQueens(board, row + 1);
+                //backtrack
+                board[row][column] = false;
+            }
+
+        }
+
+        return count;
     }
-  }
+
+    private boolean isSafe(boolean[][] board, int row, int column)
+    {
+        //vertical column
+        for(int i =0; i < row; i++)
+        {
+            if(board[i][column])
+            return false;
+        }
+
+        //diagoal left
+        int maxLeft = Math.min(row, column);
+        for(int i = 1; i <= maxLeft; i++)
+        {
+            if(board[row-i][column-i])
+            return false;
+        }
+
+        //diagonal right
+        int maxRight = Math.min(row, board.length-1-column);
+        for(int i = 1; i <= maxRight; i++)
+        {
+            if(board[row-i][column+i])
+            return false;
+        }
+
+        return true;
+    }
 }
