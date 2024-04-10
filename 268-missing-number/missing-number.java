@@ -1,12 +1,8 @@
 class Solution {
     public int missingNumber(int[] nums) {
-    Arrays.sort(nums);
-    for (int index = 0; index< nums.length; index++)
-            {
-                if( nums[index] != index){
-                    return index;
-                }
-            }
-            return nums.length;
-    }
+        int n = nums.length;
+        int Tsum = (n * (n + 1)) / 2;
+        int actualSum = Arrays.stream(nums).sum();
+        return Tsum - actualSum;
+}
 }
