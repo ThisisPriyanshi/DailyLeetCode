@@ -1,11 +1,11 @@
 class Solution {
     public boolean isPowerOfTwo(int n) {
-        for (int i = 0; i < 31; i++) {
-            int ans = (int) Math.pow(2, i);
-            if (ans == n) {
-                return true;
-            }
+        int x = 1;
+        while (x <= n) {
+            if (x == n) return true;
+            if (x > Integer.MAX_VALUE / 2) break;
+            x = x << 1;
         }
         return false;
     }
-} 
+}
