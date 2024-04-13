@@ -1,31 +1,42 @@
 class Solution {
     public int myAtoi(String s) {
-  s = s.trim();
-        if (s.length() == 0) {
-            return 0;
-        }
+        
+        //removing spaces
+        s = s.trim();
+        
+        //if the string is only spaces that are now removed
+        if(s.length() == 0)
+        return 0;
 
-        int i = 0;
-        long num = 0;
+        int traverse = 0;
         int sign = 1;
+        long num = 0;
 
-        // Check for sign
-        if (s.charAt(i) == '+' || s.charAt(i) == '-') {
-            sign = (s.charAt(i++) == '-') ? -1 : 1;
+        //handling sign
+        if((s.charAt(traverse)== '-') || (s.charAt(traverse) == '+'))
+        {
+            sign = s.charAt(traverse) == '-' ? -1 : 1;
+            traverse++;
         }
 
-        // Process digits
-        while (i < s.length() && Character.isDigit(s.charAt(i))) {
-            int digit = s.charAt(i++) - '0';
+        //handling digit
+        while(traverse < s.length() && Character.isDigit(s.charAt(traverse)))
+        {
+            int digitFound = s.charAt(traverse) - '0';
 
-            // Check for overflow
-            if (num > (Integer.MAX_VALUE - digit) / 10) {
+            //check for size
+            //here we calculate the last possible number for our digit within the range
+
+            if(num > (Integer.MAX_VALUE - digitFound) / 10)
+            {
                 return (sign == 1) ? Integer.MAX_VALUE : Integer.MIN_VALUE;
-            }
+            } 
 
-            num = num * 10 + digit;
+            num = num * 10 + digitFound;
+            traverse++;
         }
 
         return (int) (sign * num);
+
     }
 }
