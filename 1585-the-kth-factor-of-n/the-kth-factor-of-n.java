@@ -1,15 +1,15 @@
 class Solution {
     public int kthFactor(int n, int k) {
-        ArrayList<Integer> myFactors = new ArrayList<>();
+        int count = 0;
         for (int i = 1; i<= n; i++)
         {
             if (n % i == 0)
-            {
-                myFactors.add(i);
+            {   
+                count++;
+                if(count == k)
+                return i;
             }
         }
-
-        int factors = myFactors.size();
-        return k <= factors ? myFactors.get(k-1) : -1;
+        return -1;
     }
 }
