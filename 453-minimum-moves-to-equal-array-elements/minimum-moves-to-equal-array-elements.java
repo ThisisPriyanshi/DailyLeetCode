@@ -1,18 +1,13 @@
 class Solution {
-    public int minMoves(int[] nums) {
-        int min = Integer.MAX_VALUE;
+    public int minMoves(int[] nums) 
+    {
+    Arrays.sort(nums);
+    int moves = 0;
 
-        for(int ele : nums)
-        {
-            min = Math.min(min, ele);
-        }
-        //found the minimum number
-        int moves = 0;
-        for(int ele : nums)
-        {
-            moves += ele - min;
-        }
-
-        return moves;
+    for(int ele : nums)
+    {
+        moves += Math.abs(nums[0] - ele);
+    }
+    return moves;
     }
 }
