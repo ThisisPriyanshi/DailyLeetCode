@@ -8,7 +8,8 @@ class Solution {
         double minuteHandAngle = minutes * 6;
 
         double angle = Math.abs(hourHandAngle - minuteHandAngle);
-
+        
+        //if angle > 180 we have to return the smaller angle
         return angle > 180 ? 360 - angle : angle;
     }
 }
