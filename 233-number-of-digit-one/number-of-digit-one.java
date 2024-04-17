@@ -1,22 +1,19 @@
 class Solution {
     public int countDigitOne(int n) {
-        int count=0;
-        while(n>9){
-            int digit_count=(int) Math.log10(n);
-           
-            int preceeding_decimal=(int)Math.pow(10.0,digit_count*1.0);
-            
-            int leading_digit=n/preceeding_decimal;
-            count+=((leading_digit)*(Math.pow(10.0,digit_count-1))*digit_count);
-           
-            if(leading_digit>1)
-            count+=preceeding_decimal;
-            if(leading_digit==1){
-                count+=((n%preceeding_decimal)+1);
+        int ans = 0;
+        for(int i = 1; i <= n; i = i*10)
+        {
+            int div = i * 10;
+            int q = n / div;
+            int rem = n % div;
+            ans += q*i;
+
+            if(rem >= i)
+            {
+                ans += Math.min(rem - i +1, i);
             }
-            n=n%preceeding_decimal;
-          
         }
-        return n==0 ? count : count+1;
+
+        return ans;
     }
 }
