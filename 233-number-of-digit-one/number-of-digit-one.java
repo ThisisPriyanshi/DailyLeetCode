@@ -1,19 +1,27 @@
 class Solution {
     public int countDigitOne(int n) {
-        int ans = 0;
-        for(int i = 1; i <= n; i = i*10)
+        int count = 0;
+        //iterating for each didgit's place
+        for(int i = 1; i <= n; i *= 10)
         {
-            int div = i * 10;
-            int q = n / div;
-            int rem = n % div;
-            ans += q*i;
+            int divisor = i * 10;
+            int quotient = n / divisor;
+            int remainder = n % divisor;
 
-            if(rem >= i)
+            count += quotient * i;
+
+            //now checking for remainder
+            if(remainder >= 2 * i)
             {
-                ans += Math.min(rem - i +1, i);
+                count += i;
+            }
+            else if(remainder >= i)
+            {
+                count += remainder - i + 1;
             }
         }
 
-        return ans;
-    }
+        return count;
+}
+
 }
