@@ -1,23 +1,27 @@
 class Solution {
     public List<List<Integer>> subsets(int[] nums) {
+        List<Integer> temp = new ArrayList<>();
+        List<List<Integer>> finalAns = new ArrayList<>();
 
-        Arrays.sort(nums); //sorting the array to avoid duplicates
+        getSubsetList(temp, 0, nums, finalAns);
+        return finalAns;
+    }
 
-        List<List<Integer>> myList = new ArrayList<>();
-        myList.add(new ArrayList<>()); //added an empty subset
-
-        for(int num : nums)
+    private void getSubsetList(List<Integer> temp, int index, int[] arr, List<List<Integer>> finalAns)
+    {
+        //base statement
+        if(index == arr.length)
         {
-            int n = myList.size();
-            for(int i = 0; i < n; i++)
-            {
-                //making the new subsets by including the previous subset
-                List<Integer> mySubList = new ArrayList<>(myList.get(i));
-                mySubList.add(num);
-                myList.add(mySubList);
-            }
+            finalAns.add(new ArrayList<>(temp));
+            return;
         }
 
-        return myList;        
+        //pick up the number
+        temp.add(arr[index]);
+        getSubsetList(temp, index+1, arr, finalAns);
+
+        //ignore the number
+        temp.remove(temp.size()-1);
+        getSubsetList(temp, index+1, arr, finalAns);
     }
 }
