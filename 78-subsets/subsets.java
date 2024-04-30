@@ -1,27 +1,20 @@
 class Solution {
     public List<List<Integer>> subsets(int[] nums) {
-        List<Integer> temp = new ArrayList<>();
-        List<List<Integer>> finalAns = new ArrayList<>();
+        List<List<Integer>> outer = new ArrayList<>();
+        outer.add(new ArrayList<>());
+        //added empty subset
 
-        getSubsetList(temp, 0, nums, finalAns);
-        return finalAns;
-    }
-
-    private void getSubsetList(List<Integer> temp, int index, int[] arr, List<List<Integer>> finalAns)
-    {
-        //base statement
-        if(index == arr.length)
+        for(int n : nums)
         {
-            finalAns.add(new ArrayList<>(temp));
-            return;
+            int oSize = outer.size();
+            for(int i = 0; i < oSize; i++)
+            {
+                List<Integer> internal = new ArrayList<>(outer.get(i));
+                internal.add(n);
+                outer.add(internal);
+            }
         }
-
-        //pick up the number
-        temp.add(arr[index]);
-        getSubsetList(temp, index+1, arr, finalAns);
-
-        //ignore the number
-        temp.remove(temp.size()-1);
-        getSubsetList(temp, index+1, arr, finalAns);
+        
+        return outer;
     }
 }
