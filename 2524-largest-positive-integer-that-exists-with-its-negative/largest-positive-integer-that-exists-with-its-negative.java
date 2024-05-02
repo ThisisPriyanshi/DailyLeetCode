@@ -1,24 +1,20 @@
 class Solution {
     public int findMaxK(int[] nums) {
         Arrays.sort(nums);
-
-        if((nums.length == 1) || (nums[0] >= 0) || (nums[nums.length-1] < 0))
-            return -1;
-        
-        List<Integer> myList = new ArrayList<>();
-        for( int n : nums)
-        {
-            myList.add(n);
+        int left = 0, right = nums.length - 1;
+        int maxK = Integer.MIN_VALUE;
+        while (left < right) {
+            int sum = nums[left] + nums[right];
+            if (sum == 0) {
+                maxK = Math.max(maxK, nums[right]);
+                left++;
+                right--;
+            } else if (sum < 0) {
+                left++;
+            } else {
+                right--;
+            }
         }
-        int i = 0;
-        while(nums[i] < 0)
-        {
-            if(myList.contains(Math.abs(nums[i])))
-            return Math.abs(nums[i]);
-
-            i++;
-        }
-        
-        return -1;
+        return maxK != Integer.MIN_VALUE ? maxK : -1;  // If no such pair found
     }
 }
