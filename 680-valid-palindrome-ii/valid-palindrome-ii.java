@@ -1,30 +1,28 @@
 class Solution {
     public boolean validPalindrome(String s) {
-        
-        int start = 0;
-        int end = s.length() - 1;
-        boolean del = false;
+        int startP = 0;
+        int endP = s.length()-1;
+        boolean deleted = false;
 
-        return isPalindrome(s, start, end, del);
+        return isPalindrome(startP, endP, deleted, s);
     }
 
-    public boolean isPalindrome(String str, int leftPointer, int endPointer, boolean deleted)
+    private boolean isPalindrome(int start, int end, boolean flag, String str)
     {
-        while( leftPointer <= endPointer)
+        while(start <= end)
         {
-            if(str.charAt(leftPointer) != (str.charAt(endPointer)))
+            if(str.charAt(start) != str.charAt(end))
+            {
+                if(flag)
                 {
-                    if(deleted)
-                        {
-                            return false;
-                        }
-                    return (isPalindrome(str, leftPointer+1, endPointer, true) || isPalindrome(str, leftPointer, endPointer-1, true));
+                    return false;
                 }
+            return (isPalindrome(start+1, end, true, str) || isPalindrome(start, end-1, true, str));
+            }
 
-                leftPointer++;
-                endPointer--;
+            start++;
+            end--;
         }
-
         return true;
     }
 }
