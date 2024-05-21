@@ -3,14 +3,14 @@ class Solution {
         List<List<Integer>> outer = new ArrayList<>();
         outer.add(new ArrayList<>());
 
-        for(int n : nums)
+        for( int n : nums)
         {
-            int outerSize = outer.size();
-            for(int i = 0; i < outerSize; i++)
+            int outSize = outer.size();
+            for(int i = 0; i < outSize; i++)
             {
-                List<Integer> inner = new ArrayList<Integer>(outer.get(i));
+                List<Integer> inner = new ArrayList<>(outer.get(i));
                 inner.add(n);
-                outer.add(inner);
+                outer.add(inner);    
             }
         }
 
