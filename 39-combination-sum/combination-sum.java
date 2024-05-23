@@ -2,8 +2,6 @@ class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> subset = new ArrayList<>();
-
-        //Arrays.sort(candidates);
         int sumTillNow = 0;
 
         helper(candidates, 0, target, sumTillNow, subset, result);
@@ -46,5 +44,7 @@ class Solution {
 
         sum -= arr[i];
         subset.remove(subset.size()-1);
+
+        return;
     }
 }
