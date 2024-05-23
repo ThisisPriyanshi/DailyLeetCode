@@ -3,7 +3,7 @@ class Solution {
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> subset = new ArrayList<>();
 
-        Arrays.sort(candidates);
+        //Arrays.sort(candidates);
         int sumTillNow = 0;
 
         helper(candidates, 0, target, sumTillNow, subset, result);
