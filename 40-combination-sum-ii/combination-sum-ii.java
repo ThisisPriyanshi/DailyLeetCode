@@ -1,52 +1,56 @@
 class Solution {
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         
-        Arrays.sort(candidates); //duplicate elements
-        List<List<Integer>> res = new ArrayList<>();
-        List<Integer> subset = new ArrayList<>();
+        List<Integer> subSet = new ArrayList<>() ;
+        List<List<Integer>> powerSet = new ArrayList<>() ;
+        int sum = 0;
+        int n = candidates.length ;
+        Arrays.sort(candidates) ;
 
-        int sumTillNow = 0;
+        help(0, candidates, n, subSet, powerSet, sum, target) ;
 
-        helper(0, candidates, target, sumTillNow, subset, res);
+        return powerSet ;
 
-        return res;
     }
-    private static void helper(int index, int[] arr, int target, int sum, List<Integer>subset, List<List<Integer>> res)
+    public void help(int i, int[] arr, int n, List<Integer> subSet, List<List<Integer>> powerSet, int sum, int target) 
     {
-        //base condition
-        if(sum == target)
+    
+        // If sum is equal to target, we have reached a Valid Combination
+
+        if(sum == target) 
         {
-            res.add(new ArrayList<>(subset));
-            return;
-        }
-        //base condition 2 -
-        if(index >= arr.length)
-        {
+            powerSet.add(new ArrayList(subSet)) ;
             return;
         }
 
-        //base condition 3
-        if(sum > target)
-        return;
-        
-        //pick element
-        sum += arr[index];
-        subset.add(arr[index]);
+        // If at any moment, sum becomes greater than target, we don't need to proceed further
 
-        helper(index+1, arr, target, sum, subset, res);
+        if(sum > target) return ;
 
-        //backtrack
-        sum -= arr[index];
-        subset.remove(subset.size()-1);
+        // If we reach the end of arr[], we cannot go any further so we return back
 
-        //ignore element but also ignore all duplicate existences
-        while(index < arr.length - 1 && arr[index] == arr[index+1])
-        {
-            index++;
-        }
+        if(i == n) return;
 
-        helper(index+1,arr, target,sum, subset, res );
+        // Include the i-th Element into our Subset & Sum
 
-        return;
+        subSet.add(arr[i]) ;
+        sum += arr[i] ;
+
+        // Ask recursion to do rest of the task
+        help(i + 1, arr, n, subSet, powerSet, sum, target) ;
+
+        // Backtrack and undo the change we have done
+
+        subSet.remove(subSet.size()-1);
+        sum -= arr[i];
+
+        // Use the While Loop to skip all the duplicate occurrences of i-th Element
+
+        while(i + 1 < arr.length && arr[i] == arr[i + 1]) i++ ;
+
+        // Don't pick the i-th Element and ask recursion to do rest of the task
+
+        help(i + 1, arr, n, subSet, powerSet, sum, target) ;
     }
+
 }
