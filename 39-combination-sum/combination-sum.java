@@ -39,7 +39,7 @@ class Solution {
 
         subset.add(arr[i]);
 
-        //we stay at thi si only even after including because we can take it multiple times
+        //we stay at this i only even after including because we can take it multiple times
         helper(arr, i, target, sum, subset, result);
 
         //backtrack and remove
