@@ -1,34 +1,41 @@
 class Solution {
-
+    //declared keypad
     String[] keypad = {"0","1","abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
-    public List<String> letterCombinations(String digits) 
-    {
-        List <String> ans = new ArrayList<String>();
 
-        if(digits.equals(""))
+    public List<String> letterCombinations(String digits) {
+        List<String> ans = new ArrayList<>();
+
+        if (digits.length() == 0)
         return ans;
 
-        ans = helper(0, new StringBuilder(""), digits, ans);
+        helper(0, new StringBuilder(""), digits, ans);
+
         return ans;
     }
 
-    private List<String> helper(int index, StringBuilder store, String digits, List<String> finalList)
-    {   
-        if(store.length() == digits.length())
+    private void helper(int index, StringBuilder sb, String digits, List<String> result)
+    {
+        //base condition - if the length of the string builder is equal to the length of the digits we have reached the end of the commbination
+
+        if(sb.length() == digits.length())
         {
-            finalList.add(String.valueOf(store));
-            return finalList;
+            result.add(String.valueOf(sb));
+            return;
         }
 
-        int currentDig = digits.charAt(index) - '0'; //converted to digit.
+        int currDig = digits.charAt(index) - '0';
 
-        for(int i = 0; i < keypad[currentDig].length(); i++)
-        {
-            store.append(keypad[currentDig].charAt(i));
-            helper(index+1, store, digits, finalList);
-            store.deleteCharAt(store.length()-1);
+        for(int i = 0; i < keypad[currDig].length(); i++)
+        {   
+            //pick
+            sb.append(keypad[currDig].charAt(i));
+            //call recursion
+            helper(index+1, sb, digits, result);
+            //backtrack
+            sb.deleteCharAt(sb.length()-1);
+
         }
 
-        return finalList;
+        
     }
 }
