@@ -1,75 +1,55 @@
 class Solution {
-    public boolean canPartitionKSubsets(int[] nums, int K) {
-         int n = nums.length;
-         //  If K is 1, then complete array will be our answer
-        if (K==1) return true;
-
-        //  If total number of partitions are more than n, then division is not possible
-        if (n < K) return false;
-
-        // if array sum is not divisible by K then we can't divide array into K partitions
+    public boolean canPartitionKSubsets(int[] nums, int k) {
         int sum=0;
-        for (int i=0; i < n; i++) sum+=nums[i];
-        if (sum % K !=0) return false;
-
-        //  the required sum of each subset = sum / K
-        int reqSum=sum / K;
-        int subsetSum[] = new int[K];
-        boolean taken[] = new boolean[n];
-
-        //  Initialize sum of each subset from 0
-        for (int i=0; i < K; i++) subsetSum[i]=0;
-
-        //  mark all elements as not taken
-        for (int i=0; i < n; i++) taken[i]=false;
-
-        // initialize first subset sum as last element of
-        // array and mark that as taken
-        subsetSum[0]=nums[n - 1];
-        taken[n - 1]=true;
-
-        return help(nums, subsetSum, taken, reqSum, K, n, 0, n - 1);
-
-
+        for(int i:nums){
+            sum+=i;
+        }
+        
+        //sum%k must equal to 0 if not just return false
+        //if we have to to divide the array greater than array size retun false(we can't)
+        if(sum%k!=0 || nums.length<k) return false;
+        
+        //sort so we can take last element and start filling our bucket
+        Arrays.sort(nums);
+        
+        //our target is sum/k and we have to find this in nums, k times then it is valid
+        return canPartitionKSubsets(nums,sum/k,nums.length-1,new int[k]);
+    
     }
-
-    public boolean help(int[] nums, int subsetSum[], boolean taken[], int reqSum, int K, int n, int curIdx, int limitIdx) {
-
-        if (subsetSum[curIdx]==reqSum) {
-
-            /*  current index (K - 2) represents (K - 1) subsets of equal
-            sum last partition will already remain with sum 'subset'*/
-
-            if (curIdx==K - 2) return true;
-
-            //  recursive call for next subsetition
-            return help(nums, subsetSum, taken, reqSum, K, n, curIdx + 1, n - 1);
-        }
-
-        //  start from limitIdx and include elements into current partition
-        for (int i=limitIdx; i >=0; i--) {
-
-            //  if already taken, continue
-            if (taken[i]) 
-                continue;
-            int tmp=subsetSum[curIdx]+nums[i];
-
-            // if temp is less than subset then only include the element and call recursively
-            if (tmp <=reqSum) {
-
-                //  mark the element and include into current partition sum
-                taken[i]=true;
-                subsetSum[curIdx]+=nums[i];
-                boolean nxt=help(nums, subsetSum, taken, reqSum, K, n, curIdx, i - 1);
-
-                // after recursive call unmark the element and remove from subsetition sum
-                taken[i]=false;
-                subsetSum[curIdx] -=nums[i];
-
-                if (nxt) return true;
+    public boolean canPartitionKSubsets(int a[],int target,int i,int bucket[]){
+        
+        //we have taken all the elements
+        if(i==-1)
+            return true;
+        
+        //start filling the buckets
+        for(int j=0;j<bucket.length;j++){
+            
+            //can we take this ith element
+            if(bucket[j]+a[i]<=target){
+            
+                //if we take this element
+                bucket[j]+=a[i];
+                
+                //go to next element (in our case go to smallest ele bcz we sorted)
+                //if we can fill all buckets then return true
+                if(canPartitionKSubsets(a,target,i-1,bucket))
+                    return true;
+                
+                //means we can't fill other buckets if we take ith element so leave this element
+                bucket[j]-=a[i];
+            
             }
+            
+            //if our bucket is empty means we have not taken any elements in the buckets
+            if(bucket[j]==0)
+                break;
+        
         }
-
+        
+        //all buckets are full but i is pointing to some element (elements still left)
+        //or our bucket is empty means we haven't take any element (not valid)
         return false;
+    
     }
 }
