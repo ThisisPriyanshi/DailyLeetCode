@@ -1,66 +1,68 @@
 class Solution {
     public boolean canPartitionKSubsets(int[] nums, int k) {
         int sum = 0;
-        //we find the sum of all elements and then divide it by k to find each buckets value
-        for(int n : nums)
+        //found out the sum
+        for(int n :nums)
         {
             sum += n;
         }
 
-        if( sum % k != 0) // if sum is not wholly divisible by k then return false
+        //find the target size of buckets, if sum isnt wholly divided by the number of buckets
+
+        if(sum % k != 0)
         {
             return false;
         }
 
-        //now we sort the array so we can pick up elements
+        int targetSize = sum/k;
+
+        //sort the array to make picking easier
         Arrays.sort(nums);
 
-        //find each bucket value
-        int target = sum/k;
-
-        //create bucket array
+        //create the buckets array
         int[] buckets = new int[k];
 
-        //now we fill buckets
-        return fillBucket(nums, target, nums.length-1, buckets);
+        //fill the buckets 
+        return fillBuckets(nums, targetSize, nums.length - 1, buckets);
+
     }
 
-    private boolean fillBucket(int[] arr, int target, int index, int[] bucket)
+    private boolean fillBuckets(int[] arr, int targetSize, int index, int[] buckets)
     {
-        //if we have taken all elements 
-        if(index == -1)
+        //base statement
+        if(index == -1) //we have traversed through all elements
         {
             return true;
         }
 
-        //start filling the bucket
-        for(int j = 0; j < bucket.length; j++)
+        //start filling the buckets
+        for(int bucketNum = 0; bucketNum < buckets.length; bucketNum++)
         {
-            //check if bucket is full
-            if(bucket[j]+ arr[index] <= target)
+            //check if we can add the index to the target size
+            if(buckets[bucketNum] + arr[index] <= targetSize)
             {
-                bucket[j] += arr[index];
+                buckets[bucketNum] += arr[index];
 
-            //call recursion for next element
-            if(fillBucket(arr, target, index-1, bucket))
-            {
-                return true;
+                // now move to the next index
+                if(fillBuckets(arr, targetSize, index-1, buckets))
+                {
+                    return true;
+                }
+
+                //if it's not true then we can't take this element
+                buckets[bucketNum] -= arr[index];
             }
 
-            //we can't tke this lement so we skip
-            bucket[j] -= arr[index];
-            }
-
-            if(bucket[j] == 0) //bucket is empty --> no element has been chosen
+            if(buckets[bucketNum] == 0)// no elements have been picked
             {
                 break;
             }
 
         }
 
-        //either bucket is empty which is invalid 
-        //or we have filled our buckets but there are still elements left which is also invalid
+        //either bucjet is empty or we have chisen no elements
 
         return false;
+        
     }
 }
