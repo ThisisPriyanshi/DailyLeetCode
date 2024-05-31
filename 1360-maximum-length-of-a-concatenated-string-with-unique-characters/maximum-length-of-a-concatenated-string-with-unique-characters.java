@@ -71,9 +71,7 @@ class Solution {
         int[] selfCheckArr = new int[26];
         for(int i = 0; i < str.length(); i++)
         {
-            char ch = str.charAt(i);
-
-            int marker = ch - 'a';
+            int marker = str.charAt(i) - 'a';
 
             if( selfCheckArr[marker] == 1)
             return false;
