@@ -1,96 +1,37 @@
 class Solution {
     public int maxLength(List<String> arr) {
-        int[] charCheck = new int[26];
-        return findMaxLength(0, arr, charCheck, 0);
+        int[] maxLength = {0};
+        backTrack(arr, "", 0, maxLength);
+        return maxLength[0];
     }
 
-    private int findMaxLength(int index, List<String> list, int[] checkArr, int lengthTillNow)
-    {
-        //base statement
-        if( index == list.size())
-        { //we have reached the end of the list return the length we have stored till now. 
-            return lengthTillNow;
-        }
+    private void backTrack(List<String> arr, String current, int start, int[] maxLength) {
+        if (maxLength[0] < current.length())
+            maxLength[0] = current.length();
 
-        //if we have not reached the end
+        for (int i = start; i < arr.size(); i++) {
+            if (!isValid(current, arr.get(i)))
+                continue;
 
-        String currString = list.get(index);
-
-        //now we check if we can pick this string 
-        if(compare(currString, checkArr) == false)
-        {
-            //if its false we can not pick this so we go to next index 
-            return findMaxLength(index+1, list, checkArr, lengthTillNow);
-        }
-        else
-        { //if it returns true --> that means we have two options, one to pick and one to ignore
-
-            //pick the currString
-            //if we decide to pick the currString we have to first mark all characters
-
-            for(int stringIndex = 0; stringIndex < currString.length(); stringIndex++)
-            {
-                char ch = currString.charAt(stringIndex);
-                int marker = ch - 'a';
-
-                checkArr[marker] = 1;
-            }
-
-            //increase length after adding
-            lengthTillNow += currString.length();
-
-            //call recursion to move forwad
-            int lengthWhenPicked = findMaxLength(index+1, list, checkArr, lengthTillNow);
-
-            //now we have to ignore this 
-            //first we backtrack
-
-            for(int k = 0; k < currString.length(); k++)
-            {
-                char ch = currString.charAt(k);
-                int marker = ch - 'a';
-
-                checkArr[marker] = 0;
-            }
-
-            lengthTillNow -= currString.length();
-
-            //now we ignore the string
-            int lengthWhenIgnored = findMaxLength(index+1, list, checkArr, lengthTillNow);
-
-            return Math.max(lengthWhenIgnored, lengthWhenPicked);
-
+            backTrack(arr, current + arr.get(i), i + 1, maxLength);
         }
     }
 
-    private boolean compare(String str, int[] markerArr)
-    {
-        //we check if the characters of the string sent are already marked or not
-        //first we make sure there are no repeating characters in this string itself
+    private boolean isValid(String currentString, String newString) {
+        Set<Character> charSet = new HashSet<>();
 
-        int[] selfCheckArr = new int[26];
-        for(int i = 0; i < str.length(); i++)
-        {
-            int marker = str.charAt(i) - 'a';
+        for (char ch : newString.toCharArray()) {
+            if (charSet.contains(ch)) {
+                return false; 
+            }
 
-            if( selfCheckArr[marker] == 1)
-            return false;
+            charSet.add(ch);
 
-            selfCheckArr[marker] = 1;
-        }
-
-        //now we check with our marker array
-        for (int j = 0; j < str.length(); j++)
-        {
-            // If currCharacter is already taken, it means we cannot take currString, thus we return false
-            
-            int marker = str.charAt(j) - 'a';
-
-            if (markerArr[marker] == 1)
-                return false ;
+            if (currentString.contains(String.valueOf(ch))) {
+                return false;  
+            }
         }
 
         return true;
-
     }
 }
