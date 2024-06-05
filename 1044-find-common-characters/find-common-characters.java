@@ -1,33 +1,50 @@
 class Solution {
     public List<String> commonChars(String[] words) {
-        //Arrays.sort(words);
+    List<String> str = new ArrayList<String>();
 
-        List<String> str = new ArrayList<String>();
+        int[] countChar = count(words[0]);
 
-        String myWord = words[0];
-        int present = 0;
-        for(int i = 0 ; i < myWord.length(); i++)
+        for(int i = 1; i < words.length; i++)
         {
-            char z = myWord.charAt(i);
-            for(int j = 1; j < words.length; j++)
+            countChar = compare(countChar, count(words[i]));
+        }
+
+        //we have frequency of all common characters in all strings
+        for(int i = 0; i < 26; i++)
+        {
+            if(countChar[i] != 0)
             {
-                StringBuilder compare = new StringBuilder(words[j]);
-                int pos = compare.indexOf(String.valueOf(z));
-                if(pos != -1) {
-                    compare.setCharAt(pos,'0');
-                    words[j]  = String.valueOf(compare);
-                    present = 1;
-                    continue;
-                }
-                else
+                char ch = (char) ('a' + i);
+                while(countChar[i]>0)
                 {
-                    present = 0;
-                    break;
+                    str.add(String.valueOf(ch));
+                    countChar[i]--;
                 }
             }
-            if(present == 1)
-            str.add(String.valueOf(z));
         }
+
+
         return str;
     }
+
+    private static int[] compare(int[] count1, int[] count2)
+    {
+        int[] minCount = new int[26];
+        for(int i = 0; i < 26; i++)
+        minCount[i] = Math.min(count1[i], count2[i]);
+
+        return minCount;
+    }
+
+    public static int[] count(String str)
+    {
+        int[] countArr = new int[26];
+        for(char c : str.toCharArray())
+        {
+            countArr[c - 'a']++;
+        }
+
+        return countArr;
+    }
+
 }
