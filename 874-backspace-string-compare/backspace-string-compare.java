@@ -1,50 +1,48 @@
 class Solution {
     public boolean backspaceCompare(String s, String t) {
         
-        Stack <Character> sStack = new Stack<>();
-        Stack <Character> tStack = new Stack<>();
+        Stack<Character> sStack = new Stack<>();
+        Stack<Character> tStack = new Stack<>();
 
-        for( char ch : s.toCharArray())
+        //for string S
+        for(char ch : s.toCharArray())
         {
             if(ch != '#')
             {
                 sStack.push(ch);
             }
-            else
+            else if( !sStack.isEmpty())
             {
-                if(!sStack.isEmpty())
-                {
-                    sStack.pop();
-                }
+                sStack.pop();
             }
         }
 
-        for( char ch : t.toCharArray())
+        // for t string
+        for(char ch : t.toCharArray())
         {
             if(ch != '#')
             {
                 tStack.push(ch);
             }
-            else
+            else if( !tStack.isEmpty())
             {
-                if(!tStack.isEmpty())
-                {
-                    tStack.pop();
-                }
+                tStack.pop();
             }
         }
 
-        StringBuilder sSB = new StringBuilder();
-        StringBuilder tSB = new StringBuilder();
+        StringBuilder sBuild = new StringBuilder();
+        StringBuilder tBuild = new StringBuilder();
 
-        while(!sStack.isEmpty()) {
-            sSB.append(sStack.pop());
+        while(!sStack.isEmpty())
+        {
+            sBuild.append(sStack.pop());
         }
 
-        while(!tStack.isEmpty()) {
-            tSB.append(tStack.pop());
+        while(!tStack.isEmpty())
+        {
+            tBuild.append(tStack.pop());
         }
 
-        return tSB.toString().equals(sSB.toString());
+        return sBuild.toString().equals(tBuild.toString());
     }
 }
