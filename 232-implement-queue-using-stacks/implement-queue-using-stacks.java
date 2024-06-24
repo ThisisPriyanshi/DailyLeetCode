@@ -1,50 +1,52 @@
 class MyQueue {
 
-    private Stack <Integer> myStackQ = new Stack<>();
-    private Stack <Integer> myHelper = new Stack<>();
+    Stack <Integer> myStack;
+    Stack <Integer> myStack2;
+
+    public MyQueue() {
+
+        myStack = new Stack<>();
+        myStack2 = new Stack<>();
+
+    }
     
     public void push(int x) {
-
-        myStackQ.push(x);
-       
+        myStack.push(x);
     }
     
     public int pop() {
-        while(!myStackQ.isEmpty())
+        while(!myStack.isEmpty())
         {
-            myHelper.push(myStackQ.pop());
-        } // helper stack now has all values reversed
+            myStack2.push(myStack.pop());
+        }
 
-        int popped =  myHelper.pop();
-        //first element removed
-
-        while(!myHelper.isEmpty())
+        int ans = myStack2.pop();
+        while(!myStack2.isEmpty())
         {
-            myStackQ.push(myHelper.pop());
-        } // queue is set again in main stack
+            myStack.push(myStack2.pop());
+        }
 
-        return popped;
+        return ans;
     }
     
     public int peek() {
-        while(!myStackQ.isEmpty())
+        while(!myStack.isEmpty())
         {
-            myHelper.push(myStackQ.pop());
-        } // helper stack now has all values reversed
+            myStack2.push(myStack.pop());
+        }
 
-        int peekValue = myHelper.peek();
-        //first element peeked
-
-        while(!myHelper.isEmpty())
+        int ans = myStack2.peek();
+        while(!myStack2.isEmpty())
         {
-            myStackQ.push(myHelper.pop());
-        } // queue is set again in main stack
+            myStack.push(myStack2.pop());
+        }
 
-        return peekValue;
+        return ans;
+        
     }
     
     public boolean empty() {
-        return myStackQ.isEmpty();
+        return myStack.isEmpty();
     }
 }
 
