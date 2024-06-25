@@ -1,31 +1,44 @@
 class Solution {
     public String removeDuplicates(String s, int k) {
-        Stack<Character> charStack = new Stack<>();
-        Stack<Integer> countStack = new Stack<>();
-        
-        for (char c : s.toCharArray()) {
-            if (!charStack.isEmpty() && charStack.peek() == c) {
-                countStack.push(countStack.pop() + 1);
-            } else {
-                countStack.push(1);
-                charStack.push(c);
+        //we will take two stacks, one for storing characters and one for storing no of same adjacent characters.
+        Stack<Character> myCharStack = new Stack<>();
+        Stack<Integer> myCountStack = new Stack<>();
+
+        for( char ch : s.toCharArray())
+        {
+            if(!myCharStack.isEmpty() && myCharStack.peek() == ch)
+            { //if current character is equal to element on top of character stack we increase count
+                myCountStack.push(myCountStack.pop() + 1);
             }
-            
-            if (countStack.peek() == k) {
-                countStack.pop();
-                charStack.pop();
+            else
+            {   
+                //its a new character so we put the character in character stack and update its count
+                myCharStack.push(ch);
+                myCountStack.push(1);
+            }
+
+            //now we check if count = k, if it is we pop it out
+            if(myCountStack.peek() == k)
+            {
+                myCharStack.pop(); //character removed
+                myCountStack.pop();// count for character removed
             }
         }
-        
-        StringBuilder result = new StringBuilder();
-        while (!charStack.isEmpty()) {
-            char currentChar = charStack.pop();
-            int count = countStack.pop();
-            for (int i = 0; i < count; i++) {
-                result.insert(0, currentChar);
+
+        StringBuilder ans = new StringBuilder(); //for storing the answer
+
+        while(!myCharStack.isEmpty())
+        {
+            char ch = myCharStack.pop(); //pick out character
+            int charCount = myCountStack.pop(); //count of character
+
+            for(int i = 1; i <= charCount; i++)
+            {
+                ans.insert(0, ch); //add the character "count" times
             }
         }
-        
-        return result.toString();
+
+        return ans.toString(); //return string
+
     }
 }
