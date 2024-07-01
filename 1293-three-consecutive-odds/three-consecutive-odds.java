@@ -8,10 +8,11 @@ class Solution {
         {
             if( isOdd(arr[p1]) && isOdd(arr[p2]) && isOdd(arr[p3]))
             return true;
-            else
+        
             p1++;
             p2++;
             p3++;
+            
         }
 
         return false;
