@@ -8,14 +8,16 @@ class Solution {
             totSum += ele;
         }
 
-        for(int i = 0 ; i < nums.length; i++)
+        for(int i = 0; i < nums.length; i++)
         {
             if( leftSum * 2 == totSum - nums[i])
             {
                 return i;
             }
-
-            leftSum += nums[i];
+            else
+            {
+                leftSum += nums[i];
+            }
         }
         return -1;
     }
