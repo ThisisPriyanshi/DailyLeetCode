@@ -1,28 +1,27 @@
 class Solution {
     public int[] sortedSquares(int[] nums) {
-        //using two pointer method
-
-        int leftPtr = 0;
-        int rightPtr = nums.length - 1;
+        int leftP = 0 ;
+        int rightP = nums.length - 1;
         int index = nums.length - 1;
 
-        int[] result = new int[nums.length];
-
-        while(leftPtr <= rightPtr)
+        int[] myArr = new int[nums.length];
+        
+        while(leftP <= rightP)
         {
-            if ( (Math.abs(nums[leftPtr]) < Math.abs(nums[rightPtr])))
+            if(Math.abs(nums[leftP]) > Math.abs(nums[rightP]))
             {
-                result[index] = nums[rightPtr] * nums[rightPtr];
-                rightPtr--;
+                myArr[index] = nums[leftP] * nums[leftP];
+                leftP++;
             }
             else
             {
-                result[index] = nums[leftPtr] * nums[leftPtr];
-                leftPtr++;
+                myArr[index] = nums[rightP] * nums[rightP];
+                rightP--;
             }
 
             index--;
         }
-    return result;
+
+        return myArr;
     }
 }
