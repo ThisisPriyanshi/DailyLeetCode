@@ -1,21 +1,25 @@
 class Solution {
     public int maxProfit(int[] prices) {
-        int minVal = prices[0];
+        //using two pointers
 
-        int currProfit = 0;
-        int maxProfit = 0;
+        int buyingDay = 0;
+        int sellingDay = 1;
+        int profit = 0;
 
-        for(int i = 0; i < prices.length; i++)
+        while(sellingDay < prices.length)
         {
-            if ( prices[i] < minVal)
+            if(prices[buyingDay] > prices[sellingDay])
             {
-                minVal = prices[i];
+                buyingDay = sellingDay; //we will uodate our buying day
+            }
+            else
+            {
+                int profitCurr = prices[sellingDay] - prices[buyingDay];
+                profit = Math.max(profitCurr, profit);
             }
 
-            currProfit = prices[i] - minVal;
-            maxProfit = Math.max(currProfit, maxProfit);
+            sellingDay++;
         }
-
-        return maxProfit;
+        return profit;
     }
 }
