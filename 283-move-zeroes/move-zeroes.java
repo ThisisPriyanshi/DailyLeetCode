@@ -39,7 +39,7 @@ class Solution {
             writeptr++;
         }
 
-        System.out.println(Arrays.toString(nums));
+        //System.out.println(Arrays.toString(nums));
         
     }
 }
