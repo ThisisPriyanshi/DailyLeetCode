@@ -1,26 +1,24 @@
 class Solution {
     public int subarraySum(int[] nums, int k) {
-        int count = 0;
 
-        int[] prefixSum = new int[nums.length+1];
-        prefixSum[0] = 0;
-
-        for(int i = 1; i <= nums.length; i++)
+        Map<Integer, Integer> prevSumMap = new HashMap<>();
+        //adding prevSum to this map
+        prevSumMap.put(0,1); //adding previous sum as 0
+        int currSum = 0;
+        int subArrayCount = 0;
+        for(int i = 0; i < nums.length; i++)
         {
-            prefixSum[i] = prefixSum[i-1] + nums[i-1];
-        }
+            currSum += nums[i];
 
-        for(int start = 0; start < prefixSum.length; start++)
-        {
-            for(int end = start+1; end< prefixSum.length; end++)
+            int remaining = currSum - k; //check out diff in target
+
+            if(prevSumMap.containsKey(remaining))
             {
-                if( (prefixSum[end] - prefixSum[start]) == k)
-                count++;
+                subArrayCount += prevSumMap.get(remaining);
             }
+                prevSumMap.put(currSum, prevSumMap.getOrDefault(currSum,0)+1);
         }
 
-        return count;
+        return subArrayCount;
     }
 }
-
-
