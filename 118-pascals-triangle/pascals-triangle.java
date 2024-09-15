@@ -1,6 +1,7 @@
 class Solution {
     public List<List<Integer>> generate(int numRows) {
-List<List<Integer>> finalTriangle = new ArrayList<>();
+        
+        List<List<Integer>> finalTriangle = new ArrayList<>();
         List<Integer> firstRow = new ArrayList<>();
         firstRow.add(1);
         finalTriangle.add(firstRow);
