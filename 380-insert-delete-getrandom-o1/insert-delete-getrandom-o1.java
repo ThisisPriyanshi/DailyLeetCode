@@ -1,30 +1,50 @@
 class RandomizedSet {
-private List<Integer> list;
+
+    Map<Integer, Integer> myMap;
+    List<Integer> myList;
 
     public RandomizedSet() {
-        list = new ArrayList<>();
+        myMap = new HashMap<>();
+        myList = new ArrayList<>();
     }
     
     public boolean insert(int val) {
-        if (list.contains(val)) {
+        //insert in list and hashmap to avoid duplicates
+        if(myMap.containsKey(val))
+        {
             return false;
         }
-        list.add(val);
+
+        myList.add(val);
+        myMap.put(val, myList.size()-1);
         return true;
     }
     
     public boolean remove(int val) {
-        if (list.contains(val)) {
-            list.remove(Integer.valueOf(val));
+        //for removal we first find the position of the val in the list by searching the hashmap
+        if(myMap.containsKey(val))
+        {
+            int pos = myMap.get(val);
+            //now we put in the last element on the list to this position
+            myList.set(pos, myList.get(myList.size()-1));
+            //now we update the hashmap;
+            myMap.put(myList.get(pos), pos);
+            //now we remove from list
+            myList.remove(myList.size()-1);
+            //now we remove from hashmap
+            myMap.remove(val);
+
             return true;
         }
+        else
         return false;
     }
     
     public int getRandom() {
-        int randomIdx = (int) (Math.random() * list.size());
-        return list.get(randomIdx);
-
+        //we use the Random class
+        Random myRandomObj = new Random();
+        return myList.get(myRandomObj.nextInt(myList.size()));
+        
     }
 }
 
