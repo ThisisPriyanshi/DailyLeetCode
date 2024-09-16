@@ -1,31 +1,31 @@
 class Solution {
     public int[][] merge(int[][] intervals) {
+        List<int[]> myIntervals = new ArrayList<>();
 
-        List<int[]> result = new ArrayList<>();
-        
-        //sorting the intervals array by the row position
-
-        Arrays.sort(intervals,(a,b) -> Integer.compare(a[0], b[0]));
+        //now we sort our interval array 
+        Arrays.sort(intervals, (a,b) -> Integer.compare(a[0], b[0]));
 
         int start = intervals[0][0];
         int end = intervals[0][1];
 
-        for(int i[] : intervals)
+        for(int interval[] : intervals)
         {
-            if( i[0] <= end)
+            if(interval[0] <= end)
             {
-                end = Math.max(i[1], end);
+                end = Math.max(end,interval[1]);
             }
             else
             {
-                result.add(new int[]{start, end});
-                start = i[0];
-                end = i[1];
+                myIntervals.add(new int[]{start, end});
+                start = interval[0];
+                end = interval[1];
             }
         }
 
-        //add the last interval
-        result.add(new int[]{start, end});
-        return result.toArray(new int[0][0]);
+        //adding the last interval
+        myIntervals.add(new int[]{start, end});
+
+        //converting it to int[][]
+        return myIntervals.toArray(new int[0][0]);
     }
 }
