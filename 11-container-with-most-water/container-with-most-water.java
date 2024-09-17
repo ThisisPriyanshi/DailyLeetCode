@@ -6,16 +6,18 @@ class Solution {
             int currArea = 0;
             int area = 0;
 
-            while(leftP <= rightP)
+            while(leftP < rightP)
             {
-                currArea = (rightP-leftP) * Math.min(heights[leftP], heights[rightP]);
+                int minHeight = Math.min(heights[leftP], heights[rightP]);
+                currArea = (rightP-leftP) * minHeight ;
                 area = Math.max(currArea, area);
 
-                if(heights[leftP] < heights[rightP])
+                while(leftP < rightP && heights[leftP] <= minHeight)
                 {
                     leftP++;
                 }
-                else
+
+                while(leftP < rightP && heights[rightP] <= minHeight)
                 {
                     rightP--;
                 }
