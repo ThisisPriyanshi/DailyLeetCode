@@ -1,14 +1,17 @@
 class Solution {
     public void merge(int[] nums1, int m, int[] nums2, int n) {
-        int l1 = m - 1;
-        int l2 = n - 1;
-        int traverse = (m + n - 1);
+        //since we have to do it in nums1 we will start from behind hence adding the numbers largest to smallest
+
+        int l2 = n-1;
+        int l1 = m-1;
+
+        int traverse = m+n-1;
 
         while(l2 >= 0)
         {
             if( l1 >= 0 && nums1[l1] > nums2[l2])
             {
-                nums1[traverse--] = nums1[l1--]; 
+                nums1[traverse--] = nums1[l1--];
             }
             else
             {
