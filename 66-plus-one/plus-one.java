@@ -13,10 +13,9 @@ class Solution {
             }
         }
 
-        //meaning all digits are 9
-        int[] newDig = new int[digits.length+1];
-        newDig[0] = 1;
-        return newDig;
-
+        //all digits are 9
+        int[] myNumber = new int[digits.length+1];
+        myNumber[0] = 1;
+        return myNumber;
     }
 }
