@@ -3,10 +3,11 @@ class Solution {
         if(n == 0)
         return 0;
 
-        if(n == 1)
+        if(n==1)
         return 1;
 
         int[] myArr = new int[n+1];
+
         myArr[0] = 0;
         myArr[1] = 1;
 
