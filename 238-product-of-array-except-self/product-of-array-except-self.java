@@ -1,23 +1,21 @@
 class Solution {
     public int[] productExceptSelf(int[] nums) {
-        int[] result = new int[nums.length];
+        int[] myResult = new int[nums.length];
 
-        //first we fill the prefix
-        int prefix = 1;
+        int LeftToRight = 1;
         for(int i = 0; i < nums.length; i++)
         {
-            result[i] = prefix;
-            prefix *= nums[i];
+            myResult[i] = LeftToRight;
+            LeftToRight = LeftToRight * nums[i];
         }
 
-        //now we multiply by post Fix
-        int postfix = 1;
-        for(int j = nums.length-1; j >= 0; j--)
+        int RightToLeft = 1;
+        for(int j = nums.length-1; j >=0; j--)
         {
-            result[j] = result[j] * postfix;
-            postfix *= nums[j];
+            myResult[j] = myResult[j] * RightToLeft;
+            RightToLeft = RightToLeft * nums[j];
         }
 
-        return result;
+        return myResult;
     }
 }
